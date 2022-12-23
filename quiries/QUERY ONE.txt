@@ -1,0 +1,20 @@
+WITH t1 AS (
+SELECT count(g.GenreId) as purchases,il.BillingCountry as country , g.Name as NAME ,g.GenreId as GenreId 
+FROM Track t
+JOIN Genre g
+ON t.GenreId=g.GenreId
+JOIN InvoiceLine i
+ON t.TrackId=i.TrackId
+JOIN Invoice il 
+ON il.InvoiceId=i.InvoiceId
+group BY 2,3 )
+
+SELECT t1.*
+FROM t1
+JOIN (
+	SELECT MAX(Purchases) Max_Purchases, Country, Name, GenreId
+	FROM t1
+	GROUP BY 2
+	)t2
+ON t1.Country = t2.Country
+WHERE t1.Purchases = t2.Max_Purchases

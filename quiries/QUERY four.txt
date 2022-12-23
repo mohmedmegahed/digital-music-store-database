@@ -1,0 +1,12 @@
+SELECT ar.ArtistId as Artist_Id  , ar.Name as Name, COUNT(t.Name) AS Songs
+FROM Track t
+JOIN Genre g
+ON t.GenreId = g.GenreId
+JOIN Album a
+ON t.AlbumId = a.AlbumId 
+JOIN Artist ar
+ON a.ArtistId=ar.ArtistId
+WHERE g.Name = 'Rock'
+GROUP BY 1, 2, g.Name
+ORDER BY 3 DESC
+LIMIT 10;

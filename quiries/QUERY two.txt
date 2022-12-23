@@ -1,0 +1,19 @@
+WITH t1 AS 
+(
+SELECT cus.Country, SUM(inv.Total)as Total_Spent, cus.FirstName as first_name, cus.LastName as Last_Name, cus.CustomerId as customer_id
+FROM Customer cus
+JOIN Invoice inv
+ON cus.CustomerId = inv.CustomerId
+GROUP BY 5
+ORDER by 2 desc	
+)
+SELECT t1.*
+FROM t1
+JOIN(
+	SELECT Country, MAX(Total_Spent) AS MaxTotalSpent, First_Name, Last_Name, Customer_Id
+	FROM t1
+	GROUP BY 1
+)t2
+ON t1.Country = t2.Country
+WHERE t1.Total_Spent = t2.MaxTotalSpent
+ORDER BY 1 ,2 desc;

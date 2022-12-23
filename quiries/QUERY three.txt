@@ -1,0 +1,10 @@
+SELECT ar.Name as name , SUM(inv.Quantity * inv.UnitPrice) AS Amount_Spent
+FROM  Album al
+JOIN Track tr 
+ON tr.AlbumId = al.AlbumId 
+JOIN InvoiceLine inv 
+ON tr.TrackId = inv.Trackid
+JOIN Artist ar
+ON  al.ArtistId =ar.ArtistId
+GROUP BY 1
+ORDER BY 2 DESC;
